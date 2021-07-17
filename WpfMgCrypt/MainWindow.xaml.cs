@@ -29,35 +29,66 @@ namespace WpfMgCrypt
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             Dictionary<string, string> pubKey = new Dictionary<string, string>();
-            pubKey = encryption.GetPubKey(way_letters);
-            string PubKey = "";
+            Dictionary<string, string> pubKeyDictionaryToEncrOnCodeInfo = new Dictionary<string, string>();// словарь для шифровки по приватному ключу
 
-            foreach (var i in pubKey)
+            if (checkBox1.IsChecked == true)// зашифровка по заданому ключу
             {
-                PubKey += " " + i.Key + " " + i.Value;
+                string CodeInfo = OperationWithFiles.Reading(way_to_decryption_script);
+                String[] PubKeyArr = CodeInfo.Split(' ');
+
+                for (int i = 1; i < PubKeyArr.Length - 1; i += 2)
+                    pubKeyDictionaryToEncrOnCodeInfo.Add(PubKeyArr[i], PubKeyArr[i + 1]);
+
+                string Message = textBox1.Text;
+
+                OperationWithFiles.DeletTextInTxt(way_message);
+                OperationWithFiles.Stream1(way_message, Message);
+
+                for (int i = 0; i < Message.Length; i++)
+                {
+                    foreach (var j in pubKeyDictionaryToEncrOnCodeInfo)
+                    {
+                        if (Message[i].ToString() == j.Value)
+                        {
+                            textBox2.Text += j.Key;
+                        }
+                    }
+                }
+
             }
 
-            OperationWithFiles.DeletTextInTxt(way_code_info);
-            OperationWithFiles.Stream1(way_code_info, PubKey);
-
-            string Message = textBox1.Text;
-
-            OperationWithFiles.DeletTextInTxt(way_message);
-            OperationWithFiles.Stream1(way_message, Message);
-
-            for (int i = 0; i < Message.Length; i++)
+            else
             {
-                foreach (var j in pubKey)
+                pubKey = encryption.GetPubKey(way_letters);
+                string PubKey = "";
+
+                foreach (var i in pubKey)
                 {
-                    if (Message[i].ToString() == j.Value)
+                    PubKey += " " + i.Key + " " + i.Value;
+                }
+
+                OperationWithFiles.DeletTextInTxt(way_code_info);
+                OperationWithFiles.Stream1(way_code_info, PubKey);
+
+                string Message = textBox1.Text;
+
+                OperationWithFiles.DeletTextInTxt(way_message);
+                OperationWithFiles.Stream1(way_message, Message);
+
+                for (int i = 0; i < Message.Length; i++)
+                {
+                    foreach (var j in pubKey)
                     {
-                        textBox2.Text += j.Key;
+                        if (Message[i].ToString() == j.Value)
+                        {
+                            textBox2.Text += j.Key;
+                        }
                     }
                 }
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)// decode
         {
             string decryption_script = OperationWithFiles.Reading(way_to_decryption_script);
 
