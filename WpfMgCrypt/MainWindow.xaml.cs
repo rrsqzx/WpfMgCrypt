@@ -57,7 +57,7 @@ namespace WpfMgCrypt
 
             }
 
-            else // стандартная зашифровка с заданием файла
+            else
             {
                 pubKey = encryption.GetPubKey(way_letters);
                 string PubKey = "";
