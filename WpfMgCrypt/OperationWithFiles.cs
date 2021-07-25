@@ -40,23 +40,6 @@ namespace WpfMgCrypt
             }
         }
 
-        public void Stream2(string WayToFile, string Text_to_sream)
-        {
-            try
-            {
-                using (StreamWriter sw = new StreamWriter(WayToFile, true, Encoding.Default))
-                {
-                    sw.WriteLine(Text_to_sream);
-
-                }
-
-            }
-
-            catch (Exception ee)
-            {
-                System.Windows.MessageBox.Show(ee.Message);
-            }
-        }
         public void Stream1(string Way_to_File, string Text_to_stream)
         {
             using FileStream fstream = new FileStream(Way_to_File, FileMode.OpenOrCreate);
@@ -74,25 +57,6 @@ namespace WpfMgCrypt
 
             string textFromFile = Encoding.UTF8.GetString(array);
             return textFromFile;
-        }
-
-        public void ExistsDirectory()
-        {
-            string Way_txt;
-            string Path = @"C:\Users\alexandr_user\Documents\MsCod";
-            DirectoryInfo directoryInfo = new DirectoryInfo(Path);
-
-            if (!directoryInfo.Exists)
-            {
-                directoryInfo.Create();
-                Way_txt = String.Concat(Path, @"\File.txt");
-                string letters = String.Concat(Path, @"\Letters.txt");
-
-                FileInfo _txt = new FileInfo(Way_txt);
-                FileInfo _letters_txt = new FileInfo(letters);
-                _letters_txt.Create();
-                _txt.Create();
-            }
         }
     }
 }

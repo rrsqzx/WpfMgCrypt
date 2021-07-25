@@ -31,20 +31,6 @@ namespace WpfMgCrypt
             return Password;
         }
 
-        private string Decryption(string decrScript, string message_to_decryption)
-        {
-            string decrypted_message = "";
-
-            for (int i = 0; i < decrScript.Length; i++)
-            {
-
-            }
-            return decrypted_message;
-        }
-        private void GetPrivateKey()
-        {
-
-        }
         private Dictionary<string, string> GetPublicKey(string WayToAlphabet)
         {
             string Alphabet = Reading(WayToAlphabet);
