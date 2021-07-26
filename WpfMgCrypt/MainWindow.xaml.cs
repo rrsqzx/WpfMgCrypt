@@ -51,6 +51,7 @@ namespace WpfMgCrypt
                     }
                 }
 
+                Clipboard.SetData(DataFormats.Text, (Object)textBox2.Text);
             }
 
             else // стандартная зашифровка с заданием файла

@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfMgCrypt"
-        mc:Ignorable="d" Height="395" Width="808" Title="MgCrypt">
-    <Grid Visibility="Visible" Margin="0,0,10,38">
+        mc:Ignorable="d" Height="409" Width="807" Title="MgCrypt" ResizeMode="NoResize">
+    <Grid Visibility="Visible" Margin="0,0,10,1">
         <Button Content="Encrypt" HorizontalAlignment="Left" Margin="26,16,0,0" VerticalAlignment="Top" Height="35" Width="124" Click="Button_Click"/>
         <Button Content="Decode" HorizontalAlignment="Left" Margin="192,16,0,0" VerticalAlignment="Top" Height="35" Width="125" Click="Button_Click_1"/>
         <Button Content="Choose way to file" HorizontalAlignment="Left" Margin="403,16,0,0" VerticalAlignment="Top" Height="35" Width="125" Click="Button_Click_2"/>
