@@ -24,6 +24,8 @@ namespace WpfMgCrypt
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            textBox2.Clear();
+
             Dictionary<string, string> pubKey = new Dictionary<string, string>();
             Dictionary<string, string> pubKeyDictionaryToEncrOnCodeInfo = new Dictionary<string, string>();// словарь для шифровки по приватному ключу
 
@@ -36,6 +38,7 @@ namespace WpfMgCrypt
                     pubKeyDictionaryToEncrOnCodeInfo.Add(PubKeyArr[i], PubKeyArr[i + 1]);
 
                 string Message = textBox1.Text;
+                Message = Message.Replace(' ', '0');
 
                 OperationWithFiles.DeletTextInTxt(way_message);
                 OperationWithFiles.Stream1(way_message, Message);
@@ -50,13 +53,11 @@ namespace WpfMgCrypt
                         }
                     }
                 }
-
-                Clipboard.SetData(DataFormats.Text, (Object)textBox2.Text);
             }
 
             else // стандартная зашифровка с заданием файла
             {
-                pubKey = encryption.GetPubKey(way_letters);
+                pubKey = encryption.GetPubKey(way_letters, "0");
                 string PubKey = "";
 
                 foreach (var i in pubKey)
@@ -68,6 +69,8 @@ namespace WpfMgCrypt
                 OperationWithFiles.Stream1(way_code_info, PubKey);
 
                 string Message = textBox1.Text;
+                Message = Message.Replace(' ', '0');
+              
 
                 OperationWithFiles.DeletTextInTxt(way_message);
                 OperationWithFiles.Stream1(way_message, Message);
@@ -83,17 +86,23 @@ namespace WpfMgCrypt
                     }
                 }
             }
+
+            Clipboard.SetData(DataFormats.Text, (Object)textBox2.Text);
         }
 
+        string encryptmes;
         private void Button_Click_1(object sender, RoutedEventArgs e)// decode
         {
+            encryptmes = "";
+            textBox2.Clear();
+
             string decryption_script = OperationWithFiles.Reading(way_to_decryption_script);
 
             String[] PubKeyArr = decryption_script.Split(' ');
-
+            
             Dictionary<string, string> PubKey = new Dictionary<string, string>();
 
-            for (int i = 1; i < PubKeyArr.Length - 1; i += 2)
+            for (int i = 1; i < PubKeyArr.Length; i += 2)
                 PubKey.Add(PubKeyArr[i], PubKeyArr[i + 1]);
 
             string Message = textBox1.Text;
@@ -106,7 +115,10 @@ namespace WpfMgCrypt
             for (int i = 0; i < MessageList.Count; i++)
                 foreach (var dictionary in PubKey)
                     if (MessageList[i] == dictionary.Key)
-                        textBox2.Text += dictionary.Value;
+                        encryptmes += dictionary.Value;
+
+            encryptmes = encryptmes.Replace('0', ' ');
+            textBox2.Text = encryptmes;
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)

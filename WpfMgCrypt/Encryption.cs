@@ -12,9 +12,9 @@ namespace WpfMgCrypt
             return GenPas();
         }
 
-        public Dictionary<string, string> GetPubKey(string WayToAlphabet)
+        public Dictionary<string, string> GetPubKey(string WayToAlphabet, string SpaceKey)
         {
-            return GetPublicKey(WayToAlphabet);
+            return GetPublicKey(WayToAlphabet, SpaceKey );
         }
 
         private string GenPas()
@@ -28,15 +28,19 @@ namespace WpfMgCrypt
                 arr[i] = rnd.Next(33, 125);
                 Password += (char)arr[i];
             }
+
             return Password;
         }
 
-        private Dictionary<string, string> GetPublicKey(string WayToAlphabet)
+        private Dictionary<string, string> GetPublicKey(string WayToAlphabet, string SpaceKey)
         {
             string Alphabet = Reading(WayToAlphabet);
-            Alphabet = Alphabet.Remove(0, 1);
-            Alphabet += Alphabet.ToUpper() + " ";
 
+            // Alphabet = Alphabet.Remove(0, 1);
+            Alphabet = Alphabet.Replace(SpaceKey, "");
+            Alphabet += Alphabet.ToUpper(); // bag double space
+            Alphabet = Alphabet + SpaceKey;
+            
             Dictionary<string, string> pubKey = new Dictionary<string, string>();
 
             for (int i = 0; i < Alphabet.Length; i++)
